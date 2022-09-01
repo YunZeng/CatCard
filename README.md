@@ -10,5 +10,6 @@ npm v8.11.0
 ## To run
 
 ```bash
+npm install
 npm run start
 ```
