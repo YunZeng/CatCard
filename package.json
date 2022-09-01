@@ -1,0 +1,32 @@
+{
+  "name": "catcard",
+  "version": "1.0.0",
+  "description": "Cat Card Application",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node test.js",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YunZeng/CatCard.git"
+  },
+  "author": "Yun Zeng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YunZeng/CatCard/issues"
+  },
+  "homepage": "https://github.com/YunZeng/CatCard#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.2",
+    "fs": "^0.0.1-security",
+    "jimp": "^0.16.1",
+    "merge-img": "^2.1.3",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.23.0"
+  }
+}
