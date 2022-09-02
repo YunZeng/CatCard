@@ -5,6 +5,7 @@ Cat Card Application
 ## Pre-requirements
 
 node v16.16.0
+
 npm v8.11.0
 
 ## To run
@@ -29,5 +30,5 @@ CAT_GREETING=Hi CAT_SIZE=200 npm run start
 ## Improvements of initial code
 
 - Use `axios` for api calls instead of `request`, because `request` package has been deprecated.
-- Modulize api calls in an axios instance for reusablity.
+- Modulize api calls in an `axios instance` for reusablity.
 - Use `environment variables` instead of `argv`, so that the params have not to be passed in order.
