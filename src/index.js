@@ -28,7 +28,7 @@ mergeImg([
             console.log(err)
           }
 
-          const fileOut = join(process.cwd(), `/cat-card.jpg`);
+          const fileOut = join(process.cwd(), `/img/cat-card-${Date.now()}.jpg`);
           
           writeFile(fileOut, buffer, 'binary', (err) => { if(err) {
               console.log(err);
