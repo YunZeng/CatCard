@@ -1,40 +1,22 @@
 import * as dotenv from 'dotenv';
-import axios from 'axios';
-import mergeImg from'merge-img';
+import mergeImg from 'merge-img';
 import { writeFile } from 'fs';
 import { join } from 'path';
 import Jimp from 'jimp';
+import apiInstance from './request.js';
 
 dotenv.config();
 const {
     CAT_GREETING: greeting,
-    CAT_WHO: who,
     CAT_WIDTH: width,
-    CAT_HEIGHT: height,
-    CAT_COLOR: color,
-    CAT_SIZE: size
+    CAT_WHO: who
 } = process.env;
 
-const baseURL = 'https://cataas.com/cat/says/';
-const baseParams = { width, height, color, size};
-
 try {
-    const firstRes = await axios.get(baseURL + greeting, {
-        params: {
-            ...baseParams
-        },
-        responseType: 'arraybuffer',
-        responseEncoding: 'binary'
-    });
+    const firstRes = await apiInstance.get(greeting);
     console.log('Received first response with status: ', firstRes.status);
 
-    const secondRes = await axios.get(baseURL + who, {
-        params: {
-            ...baseParams
-        },
-        responseType: 'arraybuffer',
-        responseEncoding: 'binary'
-    });
+    const secondRes = await apiInstance.get(who);
     console.log('Received second response with status: ', secondRes.status);
 
 mergeImg([ 
@@ -46,7 +28,7 @@ mergeImg([
             console.log(err)
           }
 
-          const fileOut = join(process.cwd(), `/cat-card.jpg`);
+          const fileOut = join(process.cwd(), `/img/cat-card-${Date.now()}.jpg`);
           
           writeFile(fileOut, buffer, 'binary', (err) => { if(err) {
               console.log(err);
