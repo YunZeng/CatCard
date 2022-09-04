@@ -1,15 +1,14 @@
 import * as dotenv from 'dotenv';
-import mergeImg from 'merge-img';
-import { writeFile } from 'fs';
+import joinImages from 'join-images';
 import { join } from 'path';
-import Jimp from 'jimp';
 import apiInstance from './request.js';
 
 dotenv.config();
 const {
     CAT_GREETING: greeting,
     CAT_WIDTH: width,
-    CAT_WHO: who
+    CAT_WHO: who,
+    CAT_DIRECTION: direction
 } = process.env;
 
 try {
@@ -19,26 +18,15 @@ try {
     const secondRes = await apiInstance.get(who);
     console.log('Received second response with status: ', secondRes.status);
 
-mergeImg([ 
-    { src: Buffer.from(firstRes.data, 'binary'), x: 0, y:0 }, 
-    { src: Buffer.from(secondRes.data, 'binary'), x: width, y: 0 }
-  ]).then(img => {
-    img.getBuffer(Jimp.MIME_JPEG, (err, buffer) => {
-          if (err) {
-            console.log(err)
-          }
+    const destinationPath = join(process.cwd(), `/img/cat-card-${Date.now()}.jpg`);
 
-          const fileOut = join(process.cwd(), `/img/cat-card-${Date.now()}.jpg`);
-          
-          writeFile(fileOut, buffer, 'binary', (err) => { if(err) {
-              console.log(err);
-              return; 
-          }
-          
-          console.log("The file was saved!"); });
-        });
-      }); 
+    joinImages.default([ 
+        { src: Buffer.from(firstRes.data, 'binary'), x: 0, y: 0 }, 
+        { src: Buffer.from(secondRes.data, 'binary'), x: width, y: 0 }
+    ], { direction }).then(img => {
+        img.toFile(destinationPath);
+        console.log("The file was saved!");
+    });
 } catch (error) {
     console.error(error);
 }
-// console.log(greeting, who, width, height, size, color)
